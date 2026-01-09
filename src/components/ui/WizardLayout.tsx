@@ -64,7 +64,7 @@ export function WizardLayout({
       </main>
 
       {/* Navigation sticky en bas */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-t border-gray-200/50 px-4 py-3 safe-area-bottom">
+      <nav className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-gray-200/50 px-4 pt-3 pb-8" style={{ paddingBottom: 'max(2rem, env(safe-area-inset-bottom))' }}>
         <div className="flex gap-3">
           <button
             onClick={onPrevious}

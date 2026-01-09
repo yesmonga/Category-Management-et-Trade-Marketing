@@ -11,9 +11,10 @@ export async function POST(request: NextRequest) {
 
     const cloudinaryFormData = new FormData()
     cloudinaryFormData.append('file', file)
-    cloudinaryFormData.append('upload_preset', 'catman_audit')
+    cloudinaryFormData.append('upload_preset', process.env.CLOUDINARY_UPLOAD_PRESET || 'catman_preset')
 
     const cloudName = process.env.CLOUDINARY_CLOUD_NAME
+    console.log('[Upload] Cloud name:', cloudName, 'Preset:', process.env.CLOUDINARY_UPLOAD_PRESET)
     if (!cloudName) {
       return NextResponse.json({ error: 'Cloudinary not configured' }, { status: 500 })
     }

@@ -99,6 +99,7 @@ export async function updateSeeItSection(
   field: string,
   value: Evaluation | string | null
 ) {
+  console.log('[updateSeeItSection]', { auditId, field, value })
   const updateData: Record<string, Evaluation | string | null> = {}
   updateData[field] = value
 
@@ -106,6 +107,7 @@ export async function updateSeeItSection(
     where: { auditId },
     data: updateData,
   })
+  revalidatePath(`/audit/${auditId}`)
 }
 
 // ==================== UPDATE FIND IT SECTION ====================
@@ -115,6 +117,7 @@ export async function updateFindItSection(
   field: string,
   value: Evaluation | string | null
 ) {
+  console.log('[updateFindItSection]', { auditId, field, value })
   const updateData: Record<string, Evaluation | string | null> = {}
   updateData[field] = value
 
@@ -122,6 +125,7 @@ export async function updateFindItSection(
     where: { auditId },
     data: updateData,
   })
+  revalidatePath(`/audit/${auditId}`)
 }
 
 // ==================== UPDATE CHOOSE IT SECTION ====================
@@ -131,6 +135,7 @@ export async function updateChooseItSection(
   field: string,
   value: Evaluation | string | null
 ) {
+  console.log('[updateChooseItSection]', { auditId, field, value })
   const updateData: Record<string, Evaluation | string | null> = {}
   updateData[field] = value
 
@@ -138,6 +143,7 @@ export async function updateChooseItSection(
     where: { auditId },
     data: updateData,
   })
+  revalidatePath(`/audit/${auditId}`)
 }
 
 // ==================== UPDATE BUY IT SECTION ====================
@@ -147,6 +153,7 @@ export async function updateBuyItSection(
   field: string,
   value: Evaluation | string | null
 ) {
+  console.log('[updateBuyItSection]', { auditId, field, value })
   const updateData: Record<string, Evaluation | string | null> = {}
   updateData[field] = value
 
@@ -154,6 +161,7 @@ export async function updateBuyItSection(
     where: { auditId },
     data: updateData,
   })
+  revalidatePath(`/audit/${auditId}`)
 }
 
 // ==================== UPDATE GOLDEN RULES ====================
@@ -163,6 +171,7 @@ export async function updateGoldenRules(
   field: string,
   value: boolean
 ) {
+  console.log('[updateGoldenRules]', { auditId, field, value })
   const updateData: Record<string, boolean> = {}
   updateData[field] = value
 
@@ -170,6 +179,7 @@ export async function updateGoldenRules(
     where: { auditId },
     data: updateData,
   })
+  revalidatePath(`/audit/${auditId}`)
 }
 
 // ==================== UPDATE EXPERTISE ====================
