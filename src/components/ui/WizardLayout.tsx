@@ -1,8 +1,9 @@
 'use client'
 
 import { cn } from '@/lib/utils'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Home } from 'lucide-react'
 import { WIZARD_STEPS } from '@/lib/types'
+import Link from 'next/link'
 
 interface WizardLayoutProps {
   currentStep: number
@@ -29,9 +30,17 @@ export function WizardLayout({
       <header className="bg-white border-b border-gray-200">
         <div className="px-4 py-3">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-gray-500">
-              Étape {currentStep + 1} / {WIZARD_STEPS.length}
-            </span>
+            <div className="flex items-center gap-3">
+              <Link
+                href="/"
+                className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
+              >
+                <Home className="w-4 h-4" />
+              </Link>
+              <span className="text-sm font-medium text-gray-500">
+                Étape {currentStep + 1} / {WIZARD_STEPS.length}
+              </span>
+            </div>
             <span className="text-sm font-semibold text-blue-600">
               {WIZARD_STEPS[currentStep]?.name}
             </span>
