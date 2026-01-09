@@ -18,6 +18,37 @@ const colors = {
   white: '#FFFFFF',
 }
 
+type SectionType = 'SEE_IT' | 'FIND_IT' | 'CHOOSE_IT' | 'BUY_IT'
+
+function getScoreAnalysis(section: SectionType, score: number, total: number): string {
+  const ratio = score / total
+  
+  switch (section) {
+    case 'SEE_IT':
+      if (ratio <= 0.2) return "Zone Critique : Rayon Invisible. Le linéaire agit comme un 'mur de papier peint'. Aucune rupture visuelle ne vient stopper le 'Pilote Automatique' du shopper."
+      if (ratio <= 0.6) return "Visibilité Partielle. Quelques éléments émergent, mais l'impact est insuffisant. La hiérarchie visuelle est brouillonne."
+      return "Choc Visuel Réussi. Le rayon interpelle efficacement le Système 1. L'usage des courbes et du mouvement crée un arrêt naturel."
+    
+    case 'FIND_IT':
+      if (ratio <= 0.25) return "Labyrinthe. Navigation complexe. Le shopper doit lire pour comprendre. 32% des shoppers risquent d'abandonner."
+      if (ratio <= 0.75) return "Repérage Laborieux. La segmentation existe mais manque d'évidence. Les produits 'Héros' ne sont pas assez glorifiés."
+      return "Fluidité Parfaite. Segmentation intuitive et branding fort. Identification en moins d'une seconde."
+    
+    case 'CHOOSE_IT':
+      if (ratio <= 0.2) return "Surcharge Cognitive. Trop d'informations ou jargon technique. Le Système 2 est saturé. Risque de non-choix."
+      if (ratio <= 0.6) return "Comparaison Difficile. L'information est présente mais mal structurée. Le shopper doit prendre les produits en main."
+      return "Vendeur Muet Efficace. Neuro-efficacité respectée. Messages concis et hiérarchisés. Choix rapide facilité."
+    
+    case 'BUY_IT':
+      if (ratio <= 0.2) return "Vente Perdue. Barrières critiques (Prix absent, rupture). Le désir est brisé au dernier moment."
+      if (ratio <= 0.6) return "Opportunité Manquée. Incitation finale faible. Manque de CTA impératif ou bénéfice flou."
+      return "Transformation Maximale. Freins levés, CTA fort, prix clair. Achat immédiat facilité."
+    
+    default:
+      return ""
+  }
+}
+
 const styles = StyleSheet.create({
   page: {
     padding: 20,
@@ -65,9 +96,8 @@ const styles = StyleSheet.create({
   scorecard: {
     flex: 1,
     backgroundColor: colors.lightGray,
-    padding: 10,
+    padding: 8,
     borderRadius: 6,
-    alignItems: 'center',
   },
   scorecardTitle: {
     fontSize: 8,
@@ -305,19 +335,27 @@ function SectionColumn({
 
 function Scorecard({ 
   title, 
-  criteria 
+  criteria,
+  section
 }: { 
   title: string
   criteria: CriterionData[]
+  section: SectionType
 }) {
   const score = criteria.filter((c) => c.eval === 'OUI').length
   const total = criteria.length
+  const analysis = getScoreAnalysis(section, score, total)
   
   return (
     <View style={styles.scorecard}>
-      <Text style={styles.scorecardTitle}>{title}</Text>
-      <Text style={[styles.scorecardValue, getScoreColor(score, total)]}>
-        {score}/{total}
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+        <Text style={styles.scorecardTitle}>{title}</Text>
+        <Text style={[styles.scorecardValue, getScoreColor(score, total), { fontSize: 14 }]}>
+          {score}/{total}
+        </Text>
+      </View>
+      <Text style={{ fontSize: 5, color: '#4B5563', fontStyle: 'italic', lineHeight: 1.3 }}>
+        {analysis}
       </Text>
     </View>
   )
@@ -368,10 +406,10 @@ export function AuditDocument({
 
         {/* Scorecards Row */}
         <View style={styles.scorecardsRow}>
-          <Scorecard title="SEE IT" criteria={seeItCriteria} />
-          <Scorecard title="FIND IT" criteria={findItCriteria} />
-          <Scorecard title="CHOOSE IT" criteria={chooseItCriteria} />
-          <Scorecard title="BUY IT" criteria={buyItCriteria} />
+          <Scorecard title="SEE IT" criteria={seeItCriteria} section="SEE_IT" />
+          <Scorecard title="FIND IT" criteria={findItCriteria} section="FIND_IT" />
+          <Scorecard title="CHOOSE IT" criteria={chooseItCriteria} section="CHOOSE_IT" />
+          <Scorecard title="BUY IT" criteria={buyItCriteria} section="BUY_IT" />
         </View>
 
         {/* Main Grid - 4 columns */}
