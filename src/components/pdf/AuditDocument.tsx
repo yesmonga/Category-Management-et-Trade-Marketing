@@ -256,6 +256,28 @@ interface CriterionData {
   photo?: string | null
 }
 
+const CRITERIA_DESCRIPTIONS: Record<string, string> = {
+  'Visibilité à distance': "Place-toi au début de l'allée. La catégorie saute-t-elle aux yeux ?",
+  'Rupture Visuelle': "Y a-t-il une couleur ou une forme qui casse la monotonie ?",
+  'Courbes vs Lignes': "Y a-t-il des arrondis ? (Le cerveau préfère les courbes).",
+  'Mouvement': "Y a-t-il un écran, un mobile ou une image suggérant l'action ?",
+  'Hiérarchie Visuelle': "Vois-tu d'abord les Images/Couleurs (Bien) ou le Texte (Pas bien) ?",
+  'Branding': "Le logo est-il visible en < 1 seconde ? Identité simple ?",
+  'Segmentation': "Le rayon est-il coupé en blocs clairs (Couleurs/Usage) ?",
+  'Produits Héros': "Les produits stars sont-ils mis sur un piédestal ?",
+  'Taxonomie': "Le rangement est-il logique pour un débutant ?",
+  'Neuro-Efficacité': "Image à GAUCHE, Texte à DROITE ? (Sens de lecture du cerveau).",
+  'Simplicité': "Pas de jargon technique ? Compréhensible par un enfant ?",
+  'Concision': "Moins de 10 mots sur l'affiche principale ?",
+  'Aide au choix': "Le balisage permet-il de comparer sans toucher les boîtes ?",
+  'Hiérarchie de lecture': "1. Logo -> 2. Variante -> 3. Bénéfice -> 4. Nouveau.",
+  'Call To Action': "Y a-t-il un verbe impératif ? (Essayez, Découvrez...).",
+  'Bénéfice Visible': "Le gain est-il clair ? (Santé, Temps, Plaisir...).",
+  'Zone Chaude': "Les best-sellers sont-ils à hauteur des yeux (1m10-1m50) ?",
+  'Disponibilité': "Y a-t-il des trous en rayon ? (Rupture = Vente perdue).",
+  'Prix': "Le prix est-il affiché clairement ?",
+}
+
 interface AuditDocumentProps {
   audit: {
     storeName: string | null
@@ -292,6 +314,7 @@ function getScoreColor(score: number, total: number) {
 }
 
 function CriterionItem({ criterion }: { criterion: CriterionData }) {
+  const description = CRITERIA_DESCRIPTIONS[criterion.label] || ''
   return (
     <View style={styles.criterionRow}>
       <View style={styles.criterionHeader}>
@@ -300,6 +323,11 @@ function CriterionItem({ criterion }: { criterion: CriterionData }) {
           {criterion.eval || '-'}
         </Text>
       </View>
+      {description && (
+        <Text style={{ fontSize: 5, color: '#6B7280', fontStyle: 'italic', marginBottom: 2 }}>
+          {description}
+        </Text>
+      )}
       {criterion.comment && (
         <Text style={styles.criterionComment}>{criterion.comment}</Text>
       )}
@@ -426,18 +454,43 @@ export function AuditDocument({
             <Text style={styles.footerTitle}>
               Golden Rules ({goldenRulesScore}/{goldenRules.length})
             </Text>
-            <View style={styles.goldenRulesGrid}>
-              {goldenRules.map((rule, i) => (
-                <Text
-                  key={i}
-                  style={[
-                    styles.goldenRuleItem,
-                    rule.checked ? styles.goldenRuleChecked : styles.goldenRuleUnchecked,
-                  ]}
-                >
-                  {rule.checked ? '✓' : '○'} {rule.label}
-                </Text>
-              ))}
+            <View style={{ flexDirection: 'row', gap: 8 }}>
+              <View style={{ flex: 1 }}>
+                {goldenRules.slice(0, 5).map((rule, i) => (
+                  <View key={i} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 3 }}>
+                    <View style={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: 1,
+                      marginRight: 4,
+                      backgroundColor: rule.checked ? '#16A34A' : '#FFFFFF',
+                      borderWidth: 1,
+                      borderColor: rule.checked ? '#16A34A' : '#9CA3AF',
+                    }} />
+                    <Text style={{ fontSize: 6, color: rule.checked ? '#1F2937' : '#9CA3AF' }}>
+                      {rule.label}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+              <View style={{ flex: 1 }}>
+                {goldenRules.slice(5, 10).map((rule, i) => (
+                  <View key={i} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 3 }}>
+                    <View style={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: 1,
+                      marginRight: 4,
+                      backgroundColor: rule.checked ? '#16A34A' : '#FFFFFF',
+                      borderWidth: 1,
+                      borderColor: rule.checked ? '#16A34A' : '#9CA3AF',
+                    }} />
+                    <Text style={{ fontSize: 6, color: rule.checked ? '#1F2937' : '#9CA3AF' }}>
+                      {rule.label}
+                    </Text>
+                  </View>
+                ))}
+              </View>
             </View>
           </View>
 
