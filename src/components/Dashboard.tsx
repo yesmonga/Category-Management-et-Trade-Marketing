@@ -114,7 +114,7 @@ export function Dashboard({ audits }: DashboardProps) {
             </button>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {filteredAudits.map((audit) => (
               <AuditCard key={audit.id} audit={audit} onDelete={handleDelete} />
             ))}

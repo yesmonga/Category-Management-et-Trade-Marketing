@@ -65,12 +65,12 @@ export function AuditCard({ audit, onDelete }: AuditCardProps) {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            {isDraft && onDelete && (
+            {onDelete && (
               <button
                 onClick={handleDelete}
-                className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+                className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
               >
-                <Trash2 className="w-4 h-4" />
+                <Trash2 className="w-5 h-5" />
               </button>
             )}
             <ChevronRight className="w-5 h-5 text-gray-400" />
