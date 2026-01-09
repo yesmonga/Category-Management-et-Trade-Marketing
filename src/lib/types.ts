@@ -78,34 +78,34 @@ export const WIZARD_STEPS = [
 ] as const
 
 export const CRITERIA_SEEIT = [
-  { key: 'visibility', label: 'Visibilité à distance', question: 'La catégorie est-elle repérable de loin ?', hint: 'Place-toi au début de l\'allée centrale. Vois-tu la catégorie immédiatement ou est-elle noyée ?' },
-  { key: 'visualBreak', label: 'Rupture Visuelle', question: 'Éléments perturbant le regard (mode pilote auto OFF) ?', hint: 'Y a-t-il une couleur vive, une forme étrange ou un matériau différent qui "casse" la monotonie ?' },
-  { key: 'curves', label: 'Courbes vs Lignes', question: 'Utilisation de formes courbes ?', hint: 'Les présentoirs utilisent-ils des arrondis ? (Les courbes attirent plus l\'attention).' },
-  { key: 'movement', label: 'Mouvement', question: 'Mouvement physique ou implicite ?', hint: 'Y a-t-il quelque chose qui bouge ou un graphisme suggérant l\'action ?' },
-  { key: 'visualHierarchy', label: 'Hiérarchie Visuelle', question: 'Couleurs/Formes > Texte ?', hint: 'Vois-tu d\'abord les Images/Couleurs (bon) ou le Texte (mauvais) ?' },
+  { key: 'visibility', label: 'Visibilité à distance', question: 'La catégorie est-elle repérable de loin ?', hint: 'Place-toi au début de l\'allée. La catégorie saute-t-elle aux yeux ?' },
+  { key: 'visualBreak', label: 'Rupture Visuelle', question: 'Éléments perturbant le regard (mode pilote auto OFF) ?', hint: 'Y a-t-il une couleur ou une forme qui casse la monotonie du rayon ?' },
+  { key: 'curves', label: 'Courbes vs Lignes', question: 'Utilisation de formes courbes ?', hint: 'Y a-t-il des arrondis ? (Le cerveau préfère les courbes aux angles droits).' },
+  { key: 'movement', label: 'Mouvement', question: 'Mouvement physique ou implicite ?', hint: 'Y a-t-il un écran, un mobile ou une image suggérant l\'action ?' },
+  { key: 'visualHierarchy', label: 'Hiérarchie Visuelle', question: 'Couleurs/Formes > Texte ?', hint: 'Vois-tu d\'abord les Images/Couleurs (Bien) ou le Texte (Pas bien) ?' },
 ] as const
 
 export const CRITERIA_FINDIT = [
-  { key: 'branding', label: 'Branding', question: 'Marque immédiatement reconnaissable ?', hint: 'Le logo est-il visible en moins d\'une seconde ? (Max 4 éléments visuels).' },
-  { key: 'segmentation', label: 'Segmentation', question: 'Claire (ex: code couleur) ou lecture nécessaire ?', hint: 'Le rayon est-il coupé en blocs logiques (couleur/usage) ? Si tu dois lire pour distinguer, c\'est Non.' },
-  { key: 'heroProducts', label: 'Produits Héros', question: 'Mis en avant (glorifiés) ?', hint: 'Les produits stars sont-ils sur un piédestal ou un présentoir dédié ?' },
-  { key: 'taxonomy', label: 'Taxonomie', question: 'Logique pour un non-expert ?', hint: 'Le rangement est-il logique pour un novice ? (32% des shoppers ne comprennent pas le rayon).' },
+  { key: 'branding', label: 'Branding', question: 'Marque immédiatement reconnaissable ?', hint: 'Le logo est-il visible en < 1 seconde ? Identité simple ?' },
+  { key: 'segmentation', label: 'Segmentation', question: 'Claire (ex: code couleur) ou lecture nécessaire ?', hint: 'Le rayon est-il coupé en blocs clairs (Couleurs/Usage) ?' },
+  { key: 'heroProducts', label: 'Produits Héros', question: 'Mis en avant (glorifiés) ?', hint: 'Les produits stars sont-ils mis sur un piédestal (Glorifiés) ?' },
+  { key: 'taxonomy', label: 'Taxonomie', question: 'Logique pour un non-expert ?', hint: 'Le rangement est-il logique pour un débutant ? (32% ne comprennent pas).' },
 ] as const
 
 export const CRITERIA_CHOOSEIT = [
   { key: 'neuroEfficiency', label: 'Neuro-Efficacité', question: 'Image à Gauche / Texte à Droite ?', hint: 'Image à GAUCHE, Texte à DROITE ? (Sens de lecture du cerveau).' },
-  { key: 'simplicity', label: 'Simplicité', question: 'Vocabulaire simple (pas de jargon) ?', hint: 'Y a-t-il du jargon technique ? Le langage doit être accessible à tous (niveau 6ème).' },
+  { key: 'simplicity', label: 'Simplicité', question: 'Vocabulaire simple (pas de jargon) ?', hint: 'Pas de jargon technique ? Compréhensible par un enfant de 10 ans ?' },
   { key: 'conciseness', label: 'Concision', question: 'Messages < 10 mots ?', hint: 'Moins de 10 mots sur l\'affiche principale ? (Règle des 20 minutes).' },
-  { key: 'choiceHelp', label: 'Aide au choix', question: 'Balisage aide-t-il à comparer ?', hint: 'Le balisage permet-il de différencier les produits sans prendre les boîtes en main ?' },
-  { key: 'readingHierarchy', label: 'Hiérarchie de lecture', question: 'Logo > Variante > Bénéfice > Visuel déclencheur ?', hint: 'Ordre : 1. Logo -> 2. Variante -> 3. Bénéfice -> 4. "Nouveau".' },
+  { key: 'choiceHelp', label: 'Aide au choix', question: 'Balisage aide-t-il à comparer ?', hint: 'Le balisage permet-il de comparer sans toucher les boîtes ?' },
+  { key: 'readingHierarchy', label: 'Hiérarchie de lecture', question: 'Logo > Variante > Bénéfice > Visuel déclencheur ?', hint: '1. Logo -> 2. Variante -> 3. Bénéfice -> 4. Nouveau.' },
 ] as const
 
 export const CRITERIA_BUYIT = [
-  { key: 'cta', label: 'Call To Action', question: 'Verbe d\'action clair ?', hint: 'Verbe impératif présent ? (Ex: "Essayez", "Découvrez", "Protégez").' },
-  { key: 'visibleBenefit', label: 'Bénéfice Visible', question: 'Fonctionnel ou émotionnel ?', hint: 'Comprends-tu immédiatement le gain (Santé, Temps, Beauté) ?' },
-  { key: 'hotZone', label: 'Zone Chaude', question: 'Best-sellers à hauteur des yeux (1m-1m30) ?', hint: 'Les best-sellers sont-ils entre 1m00 et 1m30 (yeux/mains) ?' },
-  { key: 'availability', label: 'Disponibilité', question: 'Pas de ruptures visibles ?', hint: 'Vois-tu des trous ? (Rupture = Départ du shopper).' },
-  { key: 'price', label: 'Prix', question: 'Clairement affiché ?', hint: 'Le prix est-il clair ? L\'absence de prix est un frein majeur.' },
+  { key: 'cta', label: 'Call To Action', question: 'Verbe d\'action clair ?', hint: 'Y a-t-il un verbe impératif ? (Essayez, Découvrez, Osez...).' },
+  { key: 'visibleBenefit', label: 'Bénéfice Visible', question: 'Fonctionnel ou émotionnel ?', hint: 'Le gain est-il clair ? (Santé, Temps, Plaisir...).' },
+  { key: 'hotZone', label: 'Zone Chaude', question: 'Best-sellers à hauteur des yeux (1m-1m30) ?', hint: 'Les best-sellers sont-ils à hauteur des yeux (1m10 - 1m50) ?' },
+  { key: 'availability', label: 'Disponibilité', question: 'Pas de ruptures visibles ?', hint: 'Y a-t-il des trous en rayon ? (Rupture = Vente perdue).' },
+  { key: 'price', label: 'Prix', question: 'Clairement affiché ?', hint: 'Le prix est-il affiché clairement ? (Pas de prix = Suspicion).' },
 ] as const
 
 export const GOLDEN_RULES_LIST = [
