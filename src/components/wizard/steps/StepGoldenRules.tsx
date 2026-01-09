@@ -34,6 +34,7 @@ export function StepGoldenRules({ audit }: StepGoldenRulesProps) {
         </div>
         <h2 className="text-2xl font-bold text-gray-900 mb-1">Golden Rules</h2>
         <p className="text-gray-500 text-sm">Cochez les règles respectées</p>
+        <p className="text-sm text-gray-400 italic mt-2">Fais un scan rapide du rayon. Si tu coches moins de 5 cases, le rayon est défaillant.</p>
       </div>
 
       {/* Score */}

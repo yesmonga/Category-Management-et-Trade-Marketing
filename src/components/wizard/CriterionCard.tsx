@@ -11,6 +11,7 @@ type EvaluationValue = 'OUI' | 'NON' | 'PARTIEL' | null
 interface CriterionCardProps {
   label: string
   question: string
+  hint?: string
   evalValue: EvaluationValue
   comment: string | null
   photo: string | null
@@ -22,6 +23,7 @@ interface CriterionCardProps {
 export function CriterionCard({
   label,
   question,
+  hint,
   evalValue,
   comment,
   photo,
@@ -48,6 +50,7 @@ export function CriterionCard({
       <div className="mb-4">
         <h3 className="font-semibold text-gray-900 text-base mb-1">{label}</h3>
         <p className="text-sm text-gray-500">{question}</p>
+        {hint && <p className="text-sm text-gray-400 italic mt-1">{hint}</p>}
       </div>
 
       <div className="space-y-4">

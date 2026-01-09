@@ -44,6 +44,7 @@ export function StepFindIt({ audit }: StepFindItProps) {
           key={criterion.key}
           label={criterion.label}
           question={criterion.question}
+          hint={criterion.hint}
           evalValue={(findIt[`${criterion.key}Eval`] as EvaluationValue) || null}
           comment={(findIt[`${criterion.key}Comment`] as string) || null}
           photo={(findIt[`${criterion.key}Photo`] as string) || null}

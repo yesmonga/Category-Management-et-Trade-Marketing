@@ -44,6 +44,7 @@ export function StepSeeIt({ audit }: StepSeeItProps) {
           key={criterion.key}
           label={criterion.label}
           question={criterion.question}
+          hint={criterion.hint}
           evalValue={(seeIt[`${criterion.key}Eval`] as EvaluationValue) || null}
           comment={(seeIt[`${criterion.key}Comment`] as string) || null}
           photo={(seeIt[`${criterion.key}Photo`] as string) || null}

@@ -105,8 +105,8 @@ export function StepExpertise({ audit }: StepExpertiseProps) {
               Le pharmacien a-t-il aidé ?
             </h3>
           </div>
-          <p className="text-sm text-gray-500 mb-3">
-            35% des achats en pharmacie sont influencés par le conseil du pharmacien
+          <p className="text-sm text-gray-400 italic mb-3">
+            As-tu entendu le pharmacien conseiller ce produit ? (35% d'influence)
           </p>
           <div className="grid grid-cols-2 gap-3">
             <button

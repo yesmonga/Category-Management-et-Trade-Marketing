@@ -44,6 +44,7 @@ export function StepChooseIt({ audit }: StepChooseItProps) {
           key={criterion.key}
           label={criterion.label}
           question={criterion.question}
+          hint={criterion.hint}
           evalValue={(chooseIt[`${criterion.key}Eval`] as EvaluationValue) || null}
           comment={(chooseIt[`${criterion.key}Comment`] as string) || null}
           photo={(chooseIt[`${criterion.key}Photo`] as string) || null}

@@ -44,6 +44,7 @@ export function StepBuyIt({ audit }: StepBuyItProps) {
           key={criterion.key}
           label={criterion.label}
           question={criterion.question}
+          hint={criterion.hint}
           evalValue={(buyIt[`${criterion.key}Eval`] as EvaluationValue) || null}
           comment={(buyIt[`${criterion.key}Comment`] as string) || null}
           photo={(buyIt[`${criterion.key}Photo`] as string) || null}
