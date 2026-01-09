@@ -7,133 +7,214 @@ import {
   Image,
 } from '@react-pdf/renderer'
 
+const colors = {
+  darkBlue: '#1E3A5F',
+  blue: '#3B82F6',
+  green: '#16A34A',
+  red: '#DC2626',
+  orange: '#EA580C',
+  gray: '#6B7280',
+  lightGray: '#F3F4F6',
+  white: '#FFFFFF',
+}
+
 const styles = StyleSheet.create({
   page: {
-    padding: 40,
+    padding: 20,
     fontFamily: 'Helvetica',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.white,
   },
   header: {
-    marginBottom: 30,
-    borderBottomWidth: 2,
-    borderBottomColor: '#3B82F6',
-    paddingBottom: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#1F2937',
-    marginBottom: 5,
-  },
-  subtitle: {
-    fontSize: 12,
-    color: '#6B7280',
-  },
-  section: {
-    marginBottom: 20,
-  },
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#3B82F6',
-    marginBottom: 10,
-    paddingBottom: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
-  },
-  row: {
+    backgroundColor: colors.darkBlue,
+    padding: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 6,
+    marginBottom: 15,
+  },
+  headerLeft: {
+    flex: 1,
+  },
+  headerRight: {
+    alignItems: 'flex-end',
+  },
+  headerTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: colors.white,
+    marginBottom: 3,
+  },
+  headerSubtitle: {
+    fontSize: 9,
+    color: '#94A3B8',
+  },
+  headerScore: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: colors.white,
+  },
+  headerScoreLabel: {
+    fontSize: 8,
+    color: '#94A3B8',
+  },
+  scorecardsRow: {
+    flexDirection: 'row',
+    marginBottom: 12,
+    gap: 8,
+  },
+  scorecard: {
+    flex: 1,
+    backgroundColor: colors.lightGray,
+    padding: 10,
+    borderRadius: 6,
+    alignItems: 'center',
+  },
+  scorecardTitle: {
+    fontSize: 8,
+    color: colors.gray,
+    marginBottom: 3,
+    fontWeight: 'bold',
+  },
+  scorecardValue: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  scoreGreen: { color: colors.green },
+  scoreOrange: { color: colors.orange },
+  scoreRed: { color: colors.red },
+  mainGrid: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 12,
+  },
+  column: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    borderRadius: 6,
+    overflow: 'hidden',
+  },
+  columnHeader: {
+    backgroundColor: colors.blue,
+    padding: 6,
+  },
+  columnTitle: {
+    fontSize: 9,
+    fontWeight: 'bold',
+    color: colors.white,
+    textAlign: 'center',
+  },
+  columnContent: {
+    padding: 6,
+  },
+  criterionRow: {
+    marginBottom: 6,
+    paddingBottom: 6,
     borderBottomWidth: 1,
     borderBottomColor: '#F3F4F6',
   },
-  label: {
-    fontSize: 10,
+  criterionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 2,
+  },
+  criterionLabel: {
+    fontSize: 7,
     color: '#374151',
     flex: 1,
   },
-  value: {
-    fontSize: 10,
+  badge: {
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+    borderRadius: 3,
+    fontSize: 6,
     fontWeight: 'bold',
-    width: 50,
-    textAlign: 'center',
   },
-  valueOui: {
-    color: '#16A34A',
+  badgeOui: {
+    backgroundColor: '#DCFCE7',
+    color: colors.green,
   },
-  valueNon: {
-    color: '#DC2626',
+  badgeNon: {
+    backgroundColor: '#FEE2E2',
+    color: colors.red,
   },
-  valuePartiel: {
-    color: '#EA580C',
+  badgePartiel: {
+    backgroundColor: '#FEF3C7',
+    color: colors.orange,
   },
-  comment: {
-    fontSize: 9,
-    color: '#6B7280',
+  badgeEmpty: {
+    backgroundColor: colors.lightGray,
+    color: colors.gray,
+  },
+  criterionComment: {
+    fontSize: 6,
+    color: colors.gray,
     fontStyle: 'italic',
     marginTop: 2,
   },
-  photo: {
-    width: 150,
-    height: 100,
-    objectFit: 'cover',
-    marginTop: 5,
-    borderRadius: 4,
+  criterionPhoto: {
+    width: 40,
+    height: 40,
+    marginTop: 3,
+    borderRadius: 3,
   },
-  scoreBox: {
-    backgroundColor: '#F3F4F6',
-    padding: 15,
-    borderRadius: 8,
-    marginBottom: 15,
+  footer: {
+    flexDirection: 'row',
+    gap: 8,
   },
-  scoreTitle: {
-    fontSize: 12,
-    color: '#6B7280',
-    marginBottom: 5,
+  footerSection: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    borderRadius: 6,
+    padding: 8,
   },
-  scoreValue: {
-    fontSize: 28,
+  footerTitle: {
+    fontSize: 8,
     fontWeight: 'bold',
-    color: '#3B82F6',
+    color: colors.darkBlue,
+    marginBottom: 6,
   },
   goldenRulesGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 5,
+    gap: 3,
   },
   goldenRuleItem: {
-    fontSize: 9,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-    borderRadius: 4,
-    marginRight: 5,
-    marginBottom: 5,
+    fontSize: 6,
+    paddingVertical: 2,
+    paddingHorizontal: 4,
+    borderRadius: 2,
   },
   goldenRuleChecked: {
     backgroundColor: '#DCFCE7',
-    color: '#16A34A',
+    color: colors.green,
   },
   goldenRuleUnchecked: {
-    backgroundColor: '#F3F4F6',
+    backgroundColor: colors.lightGray,
     color: '#9CA3AF',
   },
-  observation: {
-    fontSize: 10,
-    color: '#374151',
-    lineHeight: 1.5,
-    backgroundColor: '#F9FAFB',
-    padding: 12,
-    borderRadius: 6,
+  barrierItem: {
+    fontSize: 6,
+    paddingVertical: 2,
+    paddingHorizontal: 4,
+    borderRadius: 2,
+    backgroundColor: '#FEE2E2',
+    color: colors.red,
   },
-  footer: {
+  observationText: {
+    fontSize: 7,
+    color: '#374151',
+    lineHeight: 1.4,
+  },
+  pageFooter: {
     position: 'absolute',
-    bottom: 30,
-    left: 40,
-    right: 40,
+    bottom: 10,
+    left: 20,
+    right: 20,
     textAlign: 'center',
-    fontSize: 8,
+    fontSize: 6,
     color: '#9CA3AF',
   },
 })
@@ -164,50 +245,80 @@ interface AuditDocumentProps {
   barriers: string[]
 }
 
-function CriterionRow({ criterion }: { criterion: CriterionData }) {
-  const getValueStyle = () => {
-    switch (criterion.eval) {
-      case 'OUI':
-        return [styles.value, styles.valueOui]
-      case 'NON':
-        return [styles.value, styles.valueNon]
-      case 'PARTIEL':
-        return [styles.value, styles.valuePartiel]
-      default:
-        return styles.value
-    }
+function getBadgeStyle(evalValue: 'OUI' | 'NON' | 'PARTIEL' | null) {
+  switch (evalValue) {
+    case 'OUI': return [styles.badge, styles.badgeOui]
+    case 'NON': return [styles.badge, styles.badgeNon]
+    case 'PARTIEL': return [styles.badge, styles.badgePartiel]
+    default: return [styles.badge, styles.badgeEmpty]
   }
+}
 
+function getScoreColor(score: number, total: number) {
+  const ratio = score / total
+  if (ratio >= 0.8) return styles.scoreGreen
+  if (ratio >= 0.4) return styles.scoreOrange
+  return styles.scoreRed
+}
+
+function CriterionItem({ criterion }: { criterion: CriterionData }) {
   return (
-    <View>
-      <View style={styles.row}>
-        <Text style={styles.label}>{criterion.label}</Text>
-        <Text style={getValueStyle()}>{criterion.eval || '-'}</Text>
+    <View style={styles.criterionRow}>
+      <View style={styles.criterionHeader}>
+        <Text style={styles.criterionLabel}>{criterion.label}</Text>
+        <Text style={getBadgeStyle(criterion.eval)}>
+          {criterion.eval || '-'}
+        </Text>
       </View>
       {criterion.comment && (
-        <Text style={styles.comment}>{criterion.comment}</Text>
+        <Text style={styles.criterionComment}>{criterion.comment}</Text>
       )}
       {criterion.photo && (
-        <Image src={criterion.photo} style={styles.photo} />
+        <Image src={criterion.photo} style={styles.criterionPhoto} />
       )}
     </View>
   )
 }
 
-function SectionScore({ 
-  criteria, 
-  title 
+function SectionColumn({ 
+  title, 
+  criteria,
+  color 
 }: { 
+  title: string
   criteria: CriterionData[]
-  title: string 
+  color: string
 }) {
-  const ouiCount = criteria.filter((c) => c.eval === 'OUI').length
+  return (
+    <View style={styles.column}>
+      <View style={[styles.columnHeader, { backgroundColor: color }]}>
+        <Text style={styles.columnTitle}>{title}</Text>
+      </View>
+      <View style={styles.columnContent}>
+        {criteria.map((c, i) => (
+          <CriterionItem key={i} criterion={c} />
+        ))}
+      </View>
+    </View>
+  )
+}
+
+function Scorecard({ 
+  title, 
+  criteria 
+}: { 
+  title: string
+  criteria: CriterionData[]
+}) {
+  const score = criteria.filter((c) => c.eval === 'OUI').length
   const total = criteria.length
   
   return (
-    <View style={styles.scoreBox}>
-      <Text style={styles.scoreTitle}>{title}</Text>
-      <Text style={styles.scoreValue}>{ouiCount}/{total}</Text>
+    <View style={styles.scorecard}>
+      <Text style={styles.scorecardTitle}>{title}</Text>
+      <Text style={[styles.scorecardValue, getScoreColor(score, total)]}>
+        {score}/{total}
+      </Text>
     </View>
   )
 }
@@ -224,132 +335,103 @@ export function AuditDocument({
   const formatDate = (date: Date) => {
     return new Intl.DateTimeFormat('fr-FR', {
       day: '2-digit',
-      month: 'long',
+      month: 'short',
       year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
     }).format(new Date(date))
   }
 
+  const allCriteria = [...seeItCriteria, ...findItCriteria, ...chooseItCriteria, ...buyItCriteria]
+  const totalScore = allCriteria.filter((c) => c.eval === 'OUI').length
+  const totalMax = allCriteria.length
   const goldenRulesScore = goldenRules.filter((r) => r.checked).length
 
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
+      <Page size="A4" orientation="landscape" style={styles.page}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>{audit.storeName}</Text>
-          <Text style={styles.subtitle}>
-            {audit.storeType === 'PHARMACIE' ? 'Pharmacie' : 'GMS'} • {audit.categoryAnalyzed}
-          </Text>
-          <Text style={styles.subtitle}>
-            Auditeur: {audit.auditorName} • {formatDate(audit.createdAt)}
-          </Text>
-          {audit.weather && (
-            <Text style={styles.subtitle}>Météo du rayon: {audit.weather}</Text>
-          )}
-        </View>
-
-        {/* Scores Summary */}
-        <View style={{ flexDirection: 'row', gap: 10, marginBottom: 20 }}>
-          <SectionScore criteria={seeItCriteria} title="See It" />
-          <SectionScore criteria={findItCriteria} title="Find It" />
-          <SectionScore criteria={chooseItCriteria} title="Choose It" />
-          <SectionScore criteria={buyItCriteria} title="Buy It" />
-        </View>
-
-        {/* See It Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>SEE IT - Visibilité</Text>
-          {seeItCriteria.map((c, i) => (
-            <CriterionRow key={i} criterion={c} />
-          ))}
-        </View>
-
-        {/* Find It Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>FIND IT - Navigation</Text>
-          {findItCriteria.map((c, i) => (
-            <CriterionRow key={i} criterion={c} />
-          ))}
-        </View>
-
-        {/* Choose It Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>CHOOSE IT - Décision</Text>
-          {chooseItCriteria.map((c, i) => (
-            <CriterionRow key={i} criterion={c} />
-          ))}
-        </View>
-
-        {/* Buy It Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>BUY IT - Conversion</Text>
-          {buyItCriteria.map((c, i) => (
-            <CriterionRow key={i} criterion={c} />
-          ))}
-        </View>
-
-        {/* Golden Rules */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>
-            Golden Rules ({goldenRulesScore}/{goldenRules.length})
-          </Text>
-          <View style={styles.goldenRulesGrid}>
-            {goldenRules.map((rule, i) => (
-              <Text
-                key={i}
-                style={[
-                  styles.goldenRuleItem,
-                  rule.checked
-                    ? styles.goldenRuleChecked
-                    : styles.goldenRuleUnchecked,
-                ]}
-              >
-                {rule.checked ? '✓ ' : '○ '}{rule.label}
-              </Text>
-            ))}
+          <View style={styles.headerLeft}>
+            <Text style={styles.headerTitle}>AUDIT SHOPPER REPORT</Text>
+            <Text style={styles.headerSubtitle}>
+              {audit.storeName} • {audit.storeType === 'PHARMACIE' ? 'Pharmacie' : 'GMS'}
+            </Text>
+            <Text style={styles.headerSubtitle}>
+              {audit.categoryAnalyzed} • {formatDate(audit.createdAt)}
+            </Text>
+          </View>
+          <View style={styles.headerRight}>
+            <Text style={styles.headerScore}>{totalScore}/{totalMax}</Text>
+            <Text style={styles.headerScoreLabel}>SCORE GLOBAL</Text>
+            <Text style={styles.headerSubtitle}>Auditeur: {audit.auditorName}</Text>
           </View>
         </View>
 
-        {/* Barriers */}
-        {barriers.length > 0 && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Barrières identifiées</Text>
+        {/* Scorecards Row */}
+        <View style={styles.scorecardsRow}>
+          <Scorecard title="SEE IT" criteria={seeItCriteria} />
+          <Scorecard title="FIND IT" criteria={findItCriteria} />
+          <Scorecard title="CHOOSE IT" criteria={chooseItCriteria} />
+          <Scorecard title="BUY IT" criteria={buyItCriteria} />
+        </View>
+
+        {/* Main Grid - 4 columns */}
+        <View style={styles.mainGrid}>
+          <SectionColumn title="SEE IT" criteria={seeItCriteria} color="#8B5CF6" />
+          <SectionColumn title="FIND IT" criteria={findItCriteria} color="#3B82F6" />
+          <SectionColumn title="CHOOSE IT" criteria={chooseItCriteria} color="#F59E0B" />
+          <SectionColumn title="BUY IT" criteria={buyItCriteria} color="#10B981" />
+        </View>
+
+        {/* Footer - Golden Rules + Barriers + Observation */}
+        <View style={styles.footer}>
+          <View style={styles.footerSection}>
+            <Text style={styles.footerTitle}>
+              Golden Rules ({goldenRulesScore}/{goldenRules.length})
+            </Text>
             <View style={styles.goldenRulesGrid}>
-              {barriers.map((barrier, i) => (
+              {goldenRules.map((rule, i) => (
                 <Text
                   key={i}
-                  style={[styles.goldenRuleItem, { backgroundColor: '#FEE2E2', color: '#DC2626' }]}
+                  style={[
+                    styles.goldenRuleItem,
+                    rule.checked ? styles.goldenRuleChecked : styles.goldenRuleUnchecked,
+                  ]}
                 >
-                  {barrier}
+                  {rule.checked ? '✓' : '○'} {rule.label}
                 </Text>
               ))}
             </View>
           </View>
-        )}
 
-        {/* Pharmacist helped */}
-        {audit.storeType === 'PHARMACIE' && audit.pharmacistHelped !== null && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Conseil Pharmacien</Text>
-            <Text style={styles.label}>
-              Le pharmacien a-t-il aidé ? {audit.pharmacistHelped ? 'Oui' : 'Non'}
+          <View style={styles.footerSection}>
+            <Text style={styles.footerTitle}>Barrières & Expertise</Text>
+            {barriers.length > 0 ? (
+              <View style={styles.goldenRulesGrid}>
+                {barriers.map((barrier, i) => (
+                  <Text key={i} style={styles.barrierItem}>{barrier}</Text>
+                ))}
+              </View>
+            ) : (
+              <Text style={styles.observationText}>Aucune barrière identifiée</Text>
+            )}
+            {audit.storeType === 'PHARMACIE' && audit.pharmacistHelped !== null && (
+              <Text style={[styles.observationText, { marginTop: 4 }]}>
+                Pharmacien: {audit.pharmacistHelped ? 'A conseillé' : 'N\'a pas conseillé'}
+              </Text>
+            )}
+          </View>
+
+          <View style={styles.footerSection}>
+            <Text style={styles.footerTitle}>Observation</Text>
+            <Text style={styles.observationText}>
+              {audit.mainObservation || 'Aucune observation'}
             </Text>
           </View>
-        )}
+        </View>
 
-        {/* Main Observation */}
-        {audit.mainObservation && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Observation principale</Text>
-            <Text style={styles.observation}>{audit.mainObservation}</Text>
-          </View>
-        )}
-
-        {/* Footer */}
-        <Text style={styles.footer}>
-          Rapport généré par CatMan Audit • {formatDate(new Date())}
+        {/* Page Footer */}
+        <Text style={styles.pageFooter}>
+          CatMan Audit • {formatDate(new Date())}
         </Text>
       </Page>
     </Document>
