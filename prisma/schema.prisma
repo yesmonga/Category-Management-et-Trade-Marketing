@@ -1,0 +1,222 @@
+// CatMan Audit - Schema Prisma
+// Base de données PostgreSQL hébergée sur Railway
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==================== ÉNUMÉRATIONS ====================
+
+enum AuditStatus {
+  DRAFT
+  COMPLETED
+}
+
+enum StoreType {
+  PHARMACIE
+  GMS
+}
+
+enum WeatherType {
+  CALME
+  AFFLUENTE
+  SATUREE
+}
+
+enum Evaluation {
+  OUI
+  NON
+  PARTIEL
+}
+
+enum Barrier {
+  AWARENESS
+  COMPREHENSION
+  PERTINENCE
+  VALEUR_PERCUE
+  USAGE
+}
+
+// ==================== MODÈLE PRINCIPAL ====================
+
+model Audit {
+  id        String      @id @default(cuid())
+  status    AuditStatus @default(DRAFT)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  // Étape actuelle du wizard (pour reprendre)
+  currentStep Int @default(0)
+
+  // --- PARTIE 1 : INFO ---
+  auditorName      String?
+  storeName        String?
+  storeType        StoreType?
+  categoryAnalyzed String?
+  weather          WeatherType?
+
+  // --- PARTIE 2 : PARCOURS SHOPPER ---
+  seeIt    SeeItSection?
+  findIt   FindItSection?
+  chooseIt ChooseItSection?
+  buyIt    BuyItSection?
+
+  // --- PARTIE 3 : GOLDEN RULES & BARRIÈRES ---
+  goldenRules GoldenRules?
+  barriers    Barrier[]
+
+  // Expertise
+  mainObservation  String?  @db.Text
+  pharmacistHelped Boolean?
+
+  // PDF généré
+  pdfUrl    String?
+  emailSent Boolean @default(false)
+
+  @@index([status])
+}
+
+// ==================== SECTIONS PARCOURS SHOPPER ====================
+
+model SeeItSection {
+  id      String @id @default(cuid())
+  auditId String @unique
+  audit   Audit  @relation(fields: [auditId], references: [id], onDelete: Cascade)
+
+  // 1. Visibilité à distance
+  visibilityEval    Evaluation?
+  visibilityComment String?
+  visibilityPhoto   String?
+
+  // 2. Rupture Visuelle
+  visualBreakEval    Evaluation?
+  visualBreakComment String?
+  visualBreakPhoto   String?
+
+  // 3. Courbes vs Lignes
+  curvesEval    Evaluation?
+  curvesComment String?
+  curvesPhoto   String?
+
+  // 4. Mouvement
+  movementEval    Evaluation?
+  movementComment String?
+  movementPhoto   String?
+
+  // 5. Hiérarchie Visuelle
+  visualHierarchyEval    Evaluation?
+  visualHierarchyComment String?
+  visualHierarchyPhoto   String?
+}
+
+model FindItSection {
+  id      String @id @default(cuid())
+  auditId String @unique
+  audit   Audit  @relation(fields: [auditId], references: [id], onDelete: Cascade)
+
+  // 1. Branding
+  brandingEval    Evaluation?
+  brandingComment String?
+  brandingPhoto   String?
+
+  // 2. Segmentation
+  segmentationEval    Evaluation?
+  segmentationComment String?
+  segmentationPhoto   String?
+
+  // 3. Produits Héros
+  heroProductsEval    Evaluation?
+  heroProductsComment String?
+  heroProductsPhoto   String?
+
+  // 4. Taxonomie
+  taxonomyEval    Evaluation?
+  taxonomyComment String?
+  taxonomyPhoto   String?
+}
+
+model ChooseItSection {
+  id      String @id @default(cuid())
+  auditId String @unique
+  audit   Audit  @relation(fields: [auditId], references: [id], onDelete: Cascade)
+
+  // 1. Neuro-Efficacité
+  neuroEfficiencyEval    Evaluation?
+  neuroEfficiencyComment String?
+  neuroEfficiencyPhoto   String?
+
+  // 2. Simplicité
+  simplicityEval    Evaluation?
+  simplicityComment String?
+  simplicityPhoto   String?
+
+  // 3. Concision
+  concisenessEval    Evaluation?
+  concisenessComment String?
+  concisenessPhoto   String?
+
+  // 4. Aide au choix
+  choiceHelpEval    Evaluation?
+  choiceHelpComment String?
+  choiceHelpPhoto   String?
+
+  // 5. Hiérarchie de lecture
+  readingHierarchyEval    Evaluation?
+  readingHierarchyComment String?
+  readingHierarchyPhoto   String?
+}
+
+model BuyItSection {
+  id      String @id @default(cuid())
+  auditId String @unique
+  audit   Audit  @relation(fields: [auditId], references: [id], onDelete: Cascade)
+
+  // 1. Call To Action
+  ctaEval    Evaluation?
+  ctaComment String?
+  ctaPhoto   String?
+
+  // 2. Bénéfice Visible
+  visibleBenefitEval    Evaluation?
+  visibleBenefitComment String?
+  visibleBenefitPhoto   String?
+
+  // 3. Zone Chaude
+  hotZoneEval    Evaluation?
+  hotZoneComment String?
+  hotZonePhoto   String?
+
+  // 4. Disponibilité
+  availabilityEval    Evaluation?
+  availabilityComment String?
+  availabilityPhoto   String?
+
+  // 5. Prix
+  priceEval    Evaluation?
+  priceComment String?
+  pricePhoto   String?
+}
+
+// ==================== GOLDEN RULES ====================
+
+model GoldenRules {
+  id      String @id @default(cuid())
+  auditId String @unique
+  audit   Audit  @relation(fields: [auditId], references: [id], onDelete: Cascade)
+
+  visualHierarchy  Boolean @default(false)
+  simplicity       Boolean @default(false)
+  writeRight       Boolean @default(false)
+  productHighlight Boolean @default(false)
+  curves           Boolean @default(false)
+  movement         Boolean @default(false)
+  productInContext Boolean @default(false)
+  shortMessage     Boolean @default(false)
+  effectiveCta     Boolean @default(false)
+  humanFaces       Boolean @default(false)
+}
