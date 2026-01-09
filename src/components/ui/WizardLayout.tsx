@@ -57,15 +57,15 @@ export function WizardLayout({
       </header>
 
       {/* Contenu principal */}
-      <main className="flex-1 overflow-y-auto pb-24">
+      <main className="flex-1 overflow-y-auto pb-40">
         <div className="p-4">
           {children}
         </div>
       </main>
 
       {/* Navigation sticky en bas */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 pt-3 pb-24">
-        <div className="flex gap-3 bg-white">
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 pb-8">
+        <div className="flex gap-3">
           <button
             onClick={onPrevious}
             disabled={currentStep === 0}
