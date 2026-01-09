@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import { Check, X, Minus } from 'lucide-react'
 
@@ -12,6 +13,17 @@ interface EvaluationButtonsProps {
 }
 
 export function EvaluationButtons({ value, onChange, disabled }: EvaluationButtonsProps) {
+  const [localValue, setLocalValue] = useState<EvaluationValue>(value)
+
+  useEffect(() => {
+    setLocalValue(value)
+  }, [value])
+
+  const handleClick = (newValue: EvaluationValue) => {
+    const finalValue = localValue === newValue ? null : newValue
+    setLocalValue(finalValue)
+    onChange(finalValue)
+  }
   const buttons = [
     {
       key: 'OUI' as const,
@@ -40,13 +52,13 @@ export function EvaluationButtons({ value, onChange, disabled }: EvaluationButto
     <div className="flex gap-3">
       {buttons.map((btn) => {
         const Icon = btn.icon
-        const isActive = value === btn.key
+        const isActive = localValue === btn.key
         return (
           <button
             key={btn.key}
             type="button"
             disabled={disabled}
-            onClick={() => onChange(isActive ? null : btn.key)}
+            onClick={() => handleClick(btn.key)}
             className={cn(
               'flex-1 flex flex-col items-center justify-center gap-1',
               'py-4 px-3 rounded-xl border-2 transition-all duration-200',

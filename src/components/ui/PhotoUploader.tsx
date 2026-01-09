@@ -13,6 +13,7 @@ interface PhotoUploaderProps {
 
 export function PhotoUploader({ value, onChange, disabled }: PhotoUploaderProps) {
   const [isUploading, setIsUploading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,6 +21,8 @@ export function PhotoUploader({ value, onChange, disabled }: PhotoUploaderProps)
     if (!file) return
 
     setIsUploading(true)
+    setError(null)
+    
     try {
       const formData = new FormData()
       formData.append('file', file)
@@ -33,10 +36,11 @@ export function PhotoUploader({ value, onChange, disabled }: PhotoUploaderProps)
         const data = await response.json()
         onChange(data.url)
       } else {
-        console.error('Upload failed')
+        setError('Échec de l\'upload. Vous pouvez continuer sans photo.')
       }
-    } catch (error) {
-      console.error('Upload error:', error)
+    } catch (err) {
+      console.error('Upload error:', err)
+      setError('Erreur réseau. Vous pouvez continuer sans photo.')
     } finally {
       setIsUploading(false)
       if (inputRef.current) {
@@ -76,7 +80,7 @@ export function PhotoUploader({ value, onChange, disabled }: PhotoUploaderProps)
   }
 
   return (
-    <div>
+    <div className="space-y-2">
       <input
         ref={inputRef}
         type="file"
@@ -111,6 +115,9 @@ export function PhotoUploader({ value, onChange, disabled }: PhotoUploaderProps)
           </>
         )}
       </label>
+      {error && (
+        <p className="text-xs text-orange-600 text-center">{error}</p>
+      )}
     </div>
   )
 }

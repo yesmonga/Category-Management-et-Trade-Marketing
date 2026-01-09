@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { 
   FileText, 
@@ -11,7 +10,8 @@ import {
   X, 
   Minus,
   Loader2,
-  CheckCircle
+  CheckCircle,
+  Download
 } from 'lucide-react'
 import {
   CRITERIA_SEEIT,
@@ -20,6 +20,8 @@ import {
   CRITERIA_BUYIT,
   GOLDEN_RULES_LIST,
 } from '@/lib/types'
+import { pdf } from '@react-pdf/renderer'
+import { AuditDocument } from '@/components/pdf/AuditDocument'
 
 interface StepRecapProps {
   audit: {
@@ -27,6 +29,11 @@ interface StepRecapProps {
     storeName: string | null
     storeType: 'PHARMACIE' | 'GMS' | null
     categoryAnalyzed: string | null
+    auditorName?: string | null
+    weather?: string | null
+    createdAt?: Date
+    pharmacistHelped?: boolean | null
+    barriers?: string[]
     seeIt: Record<string, unknown> | null
     findIt: Record<string, unknown> | null
     chooseIt: Record<string, unknown> | null
@@ -90,9 +97,62 @@ function SectionSummary({
 }
 
 export function StepRecap({ audit }: StepRecapProps) {
-  const router = useRouter()
   const [isSending, setIsSending] = useState(false)
   const [emailSent, setEmailSent] = useState(false)
+  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false)
+
+  const generatePdfBlob = async () => {
+    const seeItCriteria = CRITERIA_SEEIT.map((c) => ({
+      label: c.label,
+      eval: (audit.seeIt?.[`${c.key}Eval`] as 'OUI' | 'NON' | 'PARTIEL' | null) ?? null,
+      comment: (audit.seeIt?.[`${c.key}Comment`] as string) ?? null,
+      photo: (audit.seeIt?.[`${c.key}Photo`] as string) ?? null,
+    }))
+    const findItCriteria = CRITERIA_FINDIT.map((c) => ({
+      label: c.label,
+      eval: (audit.findIt?.[`${c.key}Eval`] as 'OUI' | 'NON' | 'PARTIEL' | null) ?? null,
+      comment: (audit.findIt?.[`${c.key}Comment`] as string) ?? null,
+      photo: (audit.findIt?.[`${c.key}Photo`] as string) ?? null,
+    }))
+    const chooseItCriteria = CRITERIA_CHOOSEIT.map((c) => ({
+      label: c.label,
+      eval: (audit.chooseIt?.[`${c.key}Eval`] as 'OUI' | 'NON' | 'PARTIEL' | null) ?? null,
+      comment: (audit.chooseIt?.[`${c.key}Comment`] as string) ?? null,
+      photo: (audit.chooseIt?.[`${c.key}Photo`] as string) ?? null,
+    }))
+    const buyItCriteria = CRITERIA_BUYIT.map((c) => ({
+      label: c.label,
+      eval: (audit.buyIt?.[`${c.key}Eval`] as 'OUI' | 'NON' | 'PARTIEL' | null) ?? null,
+      comment: (audit.buyIt?.[`${c.key}Comment`] as string) ?? null,
+      photo: (audit.buyIt?.[`${c.key}Photo`] as string) ?? null,
+    }))
+    const goldenRules = GOLDEN_RULES_LIST.map((r) => ({
+      label: r.label,
+      checked: !!(audit.goldenRules as Record<string, boolean>)?.[r.key],
+    }))
+
+    const doc = AuditDocument({
+      audit: {
+        storeName: audit.storeName,
+        storeType: audit.storeType,
+        auditorName: audit.auditorName ?? null,
+        categoryAnalyzed: audit.categoryAnalyzed,
+        weather: audit.weather ?? null,
+        createdAt: audit.createdAt ?? new Date(),
+        mainObservation: audit.mainObservation,
+        pharmacistHelped: audit.pharmacistHelped ?? null,
+      },
+      seeItCriteria,
+      findItCriteria,
+      chooseItCriteria,
+      buyItCriteria,
+      goldenRules,
+      barriers: audit.barriers ?? [],
+    })
+
+    const blob = await pdf(doc).toBlob()
+    return blob
+  }
 
   const handleSendEmail = async () => {
     setIsSending(true)
@@ -113,16 +173,31 @@ export function StepRecap({ audit }: StepRecapProps) {
   }
 
   const handleShare = async () => {
-    if (navigator.share) {
-      try {
+    setIsGeneratingPdf(true)
+    try {
+      const blob = await generatePdfBlob()
+      const fileName = `audit-${audit.storeName?.replace(/\s+/g, '-') || 'rapport'}.pdf`
+      const file = new File([blob], fileName, { type: 'application/pdf' })
+
+      if (typeof navigator !== 'undefined' && navigator.canShare?.({ files: [file] })) {
         await navigator.share({
           title: `Audit - ${audit.storeName}`,
-          text: `Rapport d'audit pour ${audit.storeName} - ${audit.categoryAnalyzed}`,
-          url: window.location.href,
+          files: [file],
         })
-      } catch (error) {
-        console.log('Share cancelled')
+      } else {
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = fileName
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        URL.revokeObjectURL(url)
       }
+    } catch (error) {
+      console.error('Share/download error:', error)
+    } finally {
+      setIsGeneratingPdf(false)
     }
   }
 
@@ -211,20 +286,29 @@ export function StepRecap({ audit }: StepRecapProps) {
           )}
         </button>
 
-        {typeof window !== 'undefined' && 'share' in navigator && (
-          <button
-            onClick={handleShare}
-            className={cn(
-              'w-full flex items-center justify-center gap-2',
-              'py-4 px-6 rounded-xl font-semibold',
-              'bg-gray-100 text-gray-700 hover:bg-gray-200',
-              'transition-all duration-200'
-            )}
-          >
-            <Share2 className="w-5 h-5" />
-            Partager
-          </button>
-        )}
+        <button
+          onClick={handleShare}
+          disabled={isGeneratingPdf}
+          className={cn(
+            'w-full flex items-center justify-center gap-2',
+            'py-4 px-6 rounded-xl font-semibold',
+            'bg-gray-100 text-gray-700 hover:bg-gray-200',
+            'transition-all duration-200',
+            isGeneratingPdf && 'opacity-70'
+          )}
+        >
+          {isGeneratingPdf ? (
+            <>
+              <Loader2 className="w-5 h-5 animate-spin" />
+              Génération du PDF...
+            </>
+          ) : (
+            <>
+              <Download className="w-5 h-5" />
+              Télécharger / Partager le PDF
+            </>
+          )}
+        </button>
       </div>
     </div>
   )
