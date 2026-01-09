@@ -26,7 +26,7 @@ export function WizardLayout({
   return (
     <div className="min-h-screen bg-[#F2F2F7] flex flex-col">
       {/* Header avec progression */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-200/50">
+      <header className="bg-white border-b border-gray-200">
         <div className="px-4 py-3">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-medium text-gray-500">

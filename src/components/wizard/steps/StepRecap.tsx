@@ -257,36 +257,6 @@ export function StepRecap({ audit }: StepRecapProps) {
       {/* Actions */}
       <div className="space-y-3 pt-4">
         <button
-          onClick={handleSendEmail}
-          disabled={isSending || emailSent}
-          className={cn(
-            'w-full flex items-center justify-center gap-2',
-            'py-4 px-6 rounded-xl font-semibold',
-            'transition-all duration-200',
-            emailSent
-              ? 'bg-green-100 text-green-700'
-              : 'bg-blue-500 text-white hover:bg-blue-600 shadow-lg shadow-blue-500/30'
-          )}
-        >
-          {isSending ? (
-            <>
-              <Loader2 className="w-5 h-5 animate-spin" />
-              Envoi en cours...
-            </>
-          ) : emailSent ? (
-            <>
-              <CheckCircle className="w-5 h-5" />
-              Email envoyé !
-            </>
-          ) : (
-            <>
-              <Mail className="w-5 h-5" />
-              Envoyer le rapport par email
-            </>
-          )}
-        </button>
-
-        <button
           onClick={handleShare}
           disabled={isGeneratingPdf}
           className={cn(
